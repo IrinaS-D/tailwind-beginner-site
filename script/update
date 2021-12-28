@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -x
+set -e
+
+DIR_PATH=$(dirname $0)
+
+$DIR_PATH/bootstrap
+
+ORIGIN=`git remote get-url origin || echo ''`
+FRAMEWORK=`git remote get-url framework || echo ''`
+
+if [ "$ORIGIN" == 'git@gitlab.com:mythic-insight/legendary.git' ] && [ "$FRAMEWORK" != 'git@gitlab.com:mythic-insight/legendary.git' ]; then
+  echo "Removing Legendary repo as 'origin' remote"
+  git remote remove origin
+fi;
+
+if [ "$FRAMEWORK" != 'git@gitlab.com:mythic-insight/legendary.git' ]; then
+  echo "Setting Legendary repo as 'framework' remote"
+  git remote add framework git@gitlab.com:mythic-insight/legendary.git
+fi;
+
+mix deps.get
+mix deps.compile
+mix npm.install
+mix ecto.create
+mix ecto.migrate

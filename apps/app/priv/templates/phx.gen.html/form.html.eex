@@ -1,0 +1,10 @@
+<%%= form_for @changeset, @action, [], fn f -> %>
+  <div>
+<%= for input <- Mix.Legendary.inputs(schema) do %>
+    <%= input %>
+<% end %>
+    <div>
+      <%%= styled_button "Save" %>
+    </div>
+  </div>
+<%% end %>

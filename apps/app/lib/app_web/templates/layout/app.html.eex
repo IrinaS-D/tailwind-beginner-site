@@ -1,0 +1,5 @@
+<%= render "_menu.html", assigns %>
+
+<%= flash_block(@conn) %>
+
+<%= @inner_content %>

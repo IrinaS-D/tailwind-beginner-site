@@ -1,0 +1,107 @@
+{
+  "name": "@mythic-insight/legendary",
+  "version": "4.3.2",
+  "private": true,
+  "description": "The Legendary Phoenix Boilerplate.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:integration",
+    "test:integration": "start-server-and-test start-server 4002 start-test",
+    "start-server": "MIX_ENV=e2e mix phx.server",
+    "start-test": "mix cmd npx cypress run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/mythic-insight/legendary.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/mythic-insight/legendary/issues"
+  },
+  "homepage": "https://gitlab.com/mythic-insight/legendary#readme",
+  "devDependencies": {
+    "@google/semantic-release-replace-plugin": "^1.1.0",
+    "@semantic-release/commit-analyzer": "^9.0.1",
+    "@semantic-release/exec": "^6.0.1",
+    "@semantic-release/git": "^10.0.0",
+    "@semantic-release/npm": "^8.0.0",
+    "cypress": "^8.4.1",
+    "dot": "^1.1.3",
+    "http-proxy": "^1.18.1",
+    "semantic-release": "^18.0.0",
+    "start-server-and-test": "^1.14.0"
+  },
+  "release": {
+    "branch": "master",
+    "plugins": [
+      "@semantic-release/commit-analyzer"
+    ],
+    "prepare": [
+      "@semantic-release/npm",
+      [
+        "@google/semantic-release-replace-plugin",
+        {
+          "replacements": [
+            {
+              "files": [
+                "mix.exs",
+                "apps/admin/mix.exs",
+                "apps/content/mix.exs",
+                "apps/core/mix.exs"
+              ],
+              "from": "@version \".*\"",
+              "to": "@version \"${nextRelease.version}\"",
+              "results": [
+                {
+                  "file": "mix.exs",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                },
+                {
+                  "file": "apps/admin/mix.exs",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                },
+                {
+                  "file": "apps/content/mix.exs",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                },
+                {
+                  "file": "apps/core/mix.exs",
+                  "hasChanged": true,
+                  "numMatches": 1,
+                  "numReplacements": 1
+                }
+              ],
+              "countMatches": true
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "script/generate-kube"
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json",
+            "infrastructure/kube.yaml",
+            "mix.exs",
+            "apps/admin/mix.exs",
+            "apps/content/mix.exs",
+            "apps/core/mix.exs"
+          ]
+        }
+      ]
+    ]
+  }
+}

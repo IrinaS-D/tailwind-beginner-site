@@ -1,0 +1,7 @@
+cover
+.elixir_ls
+*.dump
+.journal-*
+.git
+
+.priv/mnesia*

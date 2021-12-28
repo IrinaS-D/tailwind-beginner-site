@@ -1,0 +1,20 @@
+<div>
+  <%= Enum.map(Legendary.Content.Comments.children(@parent_id, @post.comments), fn comment -> %>
+    <div class="rounded shadow bg-gray-200 px-4 py-6 my-6">
+      <div class="flex pb-6 items-center">
+        <img class="w-10 h-10 rounded-full mr-2" src="<%= comment.author_email |> gravatar_url_for_email %>" />
+        <div class="flex-1 px-2">
+          <p class="text-base font-bold text-base md:text-xl leading-none mb-2">
+            <%= comment.author  || "Anonymous" %>
+          </p>
+          <p class="text-gray-600 text-xs md:text-base date">
+            <%= comment.date |> Timex.format!("%F", :strftime) %>
+          </p>
+        </div>
+      </div>
+      <div>
+        <%= HtmlSanitizeEx.basic_html(comment.content |> auto_paragraph_tags |> elem(1) |> IO.iodata_to_binary()) %>
+      </div>
+    </div>
+  <% end) %>
+</div>

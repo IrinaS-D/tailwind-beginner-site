@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -x
+set -e
+
+DIR_PATH=$(dirname $0)
+
+$DIR_PATH/bootstrap
+
+MIX_ENV=test mix deps.get
+MIX_ENV=test mix ecto.create
+MIX_ENV=test mix ecto.migrate
+
+mix test

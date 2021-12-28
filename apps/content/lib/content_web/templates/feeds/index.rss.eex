@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title><%= title(@conn, assigns) %></title>
+    <description><%= excerpt(@conn, assigns) %></description>
+    <link><%= Legendary.Content.Router.Helpers.url(Legendary.CoreWeb.Endpoint) %></link>
+    <atom:link href="<%= Legendary.Content.Router.Helpers.url(Legendary.CoreWeb.Endpoint) %><%= @feed_url %>" rel="self" type="application/rss+xml" />
+
+<%= for post <- @posts do %>
+  <%= if unauthenticated_post?(post) do %>
+    <item>
+      <title><%= post.title |> HtmlSanitizeEx.strip_tags() %></title>
+      <description>
+        <%= post.content |> process_content |> html_escape |> safe_to_string %>
+      </description>
+      <pubDate><%=
+        post.date
+        |> DateTime.from_naive!("Etc/UTC")
+        |> Timex.format!("{WDshort}, {D} {Mshort} {YYYY} {h24}:{m}:{s} {Z}")
+      %></pubDate>
+      <guid isPermaLink="true"><%= post.guid %></guid>
+    </item>
+  <% end %>
+<% end %>
+  </channel>
+</rss>

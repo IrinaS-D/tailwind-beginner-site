@@ -1,0 +1,5 @@
+@import "content-editor-overrides";
+
+.social-media-preview-image.social-media-preview-image {
+  border-radius: 16px !important;
+}
