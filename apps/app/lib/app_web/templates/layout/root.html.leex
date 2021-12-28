@@ -9,12 +9,10 @@
     <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer phx-track-static type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  <body class="text-gray-800 antialiased">
+  <body>
     <main role="main">
       <!-- Page Contents -->
-      <div class="bg-gray-100 min-h-screen">
-        <%= @inner_content %>
-      </div>
+      <%= @inner_content %>
     </main>
   </body>
 </html>

@@ -9,14 +9,12 @@
     <%= feed_tag(@conn, assigns) %>
     <script phx-track-static defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  <body class="text-gray-800 antialiased">
+  <body>
     <main role="main">
       <!-- Page Contents -->
-      <div class="bg-gray-100 min-h-screen">
-        <%= flash_block(@conn) %>
-
-        <%= @inner_content %>
-      </div>
+      <%= flash_block(@conn) %>
+test
+      <%= @inner_content %>
     </main>
   </body>
 </html>
